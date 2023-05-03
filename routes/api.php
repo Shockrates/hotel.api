@@ -23,6 +23,12 @@ Route::post('/login',[AuthController::class, 'login']);
 Route::resource('/rooms',RoomController::class);
 Route::resource('/roomtype',RoomTypeController::class);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::middleware('auth:sanctum')->group(function(){
+    Route::post('/logout',[AuthController::class, 'logout']);
+    //Route::get('/user',[AuthController::class, 'user']);
 });
+

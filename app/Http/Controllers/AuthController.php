@@ -7,6 +7,7 @@ use App\Http\Requests\RegisterRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -55,4 +56,15 @@ class AuthController extends Controller
         ])->withCookie($cookie);
 
     }
+
+    public function logout(){
+
+        Auth::user()->currentAccessToken()->delete();
+
+        $cookie = cookie()->forget('token');
+
+        return response()->json([
+            'message' => 'Logged out successfully!'
+        ])->withCookie($cookie);
+    } 
 }
