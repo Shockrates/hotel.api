@@ -3,19 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\BookingResource;
-use App\Http\Resources\RoomResource;
-use App\Models\Room;
+use App\Models\Booking;
 use Illuminate\Http\Request;
 
-class RoomController extends Controller
+class BookingController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return RoomResource::collection(
-            Room::all()
+        return BookingResource::collection(
+            Booking::all()
         );
     }
 
@@ -38,15 +37,15 @@ class RoomController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Room $room)
+    public function show(Booking $booking)
     {
-        return new RoomResource($room);
+        return new BookingResource($booking);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Room $room)
+    public function edit(Booking $booking)
     {
         //
     }
@@ -54,7 +53,7 @@ class RoomController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Room $room)
+    public function update(Request $request, Booking $booking)
     {
         //
     }
@@ -62,16 +61,8 @@ class RoomController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Room $room)
+    public function destroy(Booking $booking)
     {
         //
     }
-
-    public function getAllRoomBookings(Room $room){
-        $bookings = $room->bookings;
-        return $room;
-        //return BookingResource::collection($bookings);
-        
-    }
-    
 }

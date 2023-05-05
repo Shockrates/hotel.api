@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomTypeController;
 use Illuminate\Http\Request;
@@ -19,9 +20,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register',[AuthController::class, 'register']);
 Route::post('/login',[AuthController::class, 'login']);
+Route::get('/roombookings/{room}',[RoomController::class, 'getAllRoomBookings']);
 
 Route::resource('/rooms',RoomController::class);
 Route::resource('/roomtype',RoomTypeController::class);
+Route::resource('/bookings',BookingController::class);
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
