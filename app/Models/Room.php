@@ -36,11 +36,24 @@ class Room extends Model
 
     // START Test for Booking
     /**
-     * Get the bookins for this room.
+     * Get the bookings for this room.
      */
     public function bookings(): HasMany
     {
-        return $this->hasMany(Booking::class, 'id');
+        return $this->hasMany(Booking::class, 'room_id');
     }
     //END Test for Bookings
+
+
+    // START Test for review
+    /**
+     * Get the reviews for this room.
+     */
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class, 'room_id');
+    }
+    //END Test for reviews
+
+
 }
