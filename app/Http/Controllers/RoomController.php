@@ -77,7 +77,6 @@ class RoomController extends Controller
         
         return BookingResource::collection($bookings);
         
-        
     }
 
     public function getAllRoomReviews(Room $room){
@@ -85,24 +84,56 @@ class RoomController extends Controller
         $reviews = $room->reviews;
         
         return ReviewResource::collection($reviews);
-        
-        
+           
     }
 
     public function searchRoom(RoomSearchRequest $request)
     {
 
-        $data = $request->validated();
+        //$data = $request->validated();
+
+        $data = array_filter($request->validated());
 
         $queryArray = [];
+        $bookingArr = [];
 
-        foreach ($data as $key => $value) {
-            array_push($queryArray, [$key, $value]);
+        // foreach ($data as $key => $value) {
+        //     array_push($queryArray, [$key, $value]);
+        // }
+
+        if (!empty( $data['city'])) {
+            array_push($queryArray, ['city', $data['city']]);
         }
 
-        return RoomResource::collection(
-            Room::where($queryArray)->get()
-        );
+        if (!empty( $data['type_id'])) {
+            array_push($queryArray, ['type_id', $data['type_id']]);
+        }
+
+        if (!empty( $data['check_in_date']) && !empty( $data['check_out_date'])) {
+      
+
+            $bookings = Room::find(1)->bookings->where([
+                ['check_in_date', '<=', $data['check_in_date']],
+                ['check_out_date', '>=' ,$data['check_out_date']]
+            ])->get();
+
+            foreach ($bookings as $key => $value) {
+                # code...$bookingArr
+                array_push($bookingArr, $value->room_id);
+            }
+        }
+
+        // $sql .= 'room_id NOT IN (
+        //     SELECT room_id
+        //     FROM booking
+        //     WHERE check_in_date <= :checkOutDate AND check_out_date >= :checkInDate)';
+     
+
+        // return RoomResource::collection(
+        //     Room::where($queryArray)->get()
+        // );
+
+        return $bookingArr;
 
 
     }

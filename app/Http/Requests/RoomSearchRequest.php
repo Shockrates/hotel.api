@@ -23,7 +23,15 @@ class RoomSearchRequest extends FormRequest
     {
         return [
             'city' => 'string|max:255',
-            'type_id' => 'integer',
+            'type_id' => 'integer|nullable',
+            'check_in_date' => 'required|date|after:tomorrow',
+            'check_out_date' => 'required|date|after:check_in_date',
+            'min_price' => 'integer|nullable',
+            'max_price' => 'integer|nullable',
+            "count_of_guest" => 'integer|nullable',
+            'parking' => 'integer|nullable',
+            'wifi' => 'integer|nullable',
+            'pet_friendly' => 'integer|nullable',
             
         ];
     }
