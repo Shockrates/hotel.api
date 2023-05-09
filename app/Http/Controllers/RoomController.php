@@ -7,6 +7,7 @@ use App\Http\Resources\BookingResource;
 use App\Http\Resources\ReviewResource;
 use App\Http\Resources\RoomResource;
 use App\Models\Room;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
@@ -110,30 +111,30 @@ class RoomController extends Controller
         }
 
         if (!empty( $data['check_in_date']) && !empty( $data['check_out_date'])) {
-      
+            
+            $checkInDate = Carbon::parse($data['check_in_date'])->format('Y-m-d');
+            $checkOutDate = Carbon::parse($data['check_out_date'])->format('Y-m-d');
 
-            $bookings = Room::find(1)->bookings->where([
-                ['check_in_date', '<=', $data['check_in_date']],
-                ['check_out_date', '>=' ,$data['check_out_date']]
+            $bookings = Room::find(1)->bookings()->where([
+                ['check_in_date', '<=', $checkInDate],
+                ['check_out_date', '>=' ,$checkOutDate]
             ])->get();
+
+            //$bookings = Room::find(1)->bookings;
 
             foreach ($bookings as $key => $value) {
                 # code...$bookingArr
                 array_push($bookingArr, $value->room_id);
             }
         }
-
-        // $sql .= 'room_id NOT IN (
-        //     SELECT room_id
-        //     FROM booking
-        //     WHERE check_in_date <= :checkOutDate AND check_out_date >= :checkInDate)';
      
+        return RoomResource::collection(
+            Room::where($queryArray)
+            ->whereNotIn('id', $bookingArr)
+            ->get()
+        );
 
-        // return RoomResource::collection(
-        //     Room::where($queryArray)->get()
-        // );
-
-        return $bookingArr;
+        //return $bookingArr;
 
 
     }
