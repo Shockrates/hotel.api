@@ -90,6 +90,7 @@ class RoomController extends Controller
 
     public function searchRoom(RoomSearchRequest $request)
     {
+        
 
         //$data = $request->validated();
 
@@ -115,26 +116,22 @@ class RoomController extends Controller
             $checkInDate = Carbon::parse($data['check_in_date'])->format('Y-m-d');
             $checkOutDate = Carbon::parse($data['check_out_date'])->format('Y-m-d');
 
-            $bookings = Room::find(1)->bookings()->where([
-                ['check_in_date', '<=', $checkInDate],
-                ['check_out_date', '>=' ,$checkOutDate]
-            ])->get();
-
-            //$bookings = Room::find(1)->bookings;
-
-            foreach ($bookings as $key => $value) {
-                # code...$bookingArr
-                array_push($bookingArr, $value->room_id);
-            }
+            $bookings = Room::find(1)->bookings()->select("room_id")->where([
+                ['check_in_date', '<=', $checkOutDate],
+                ['check_out_date', '>=' ,$checkInDate]
+            ]);
         }
      
         return RoomResource::collection(
             Room::where($queryArray)
-            ->whereNotIn('id', $bookingArr)
+            ->whereNotIn('id', $bookings)
             ->get()
         );
 
-        //return $bookingArr;
+        // foreach ($data as $key => $value) {
+        //     array_push($bookingArr, [$key, $value]);
+        // }
+        // return $bookingArr;
 
 
     }
