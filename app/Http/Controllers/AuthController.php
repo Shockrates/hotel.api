@@ -77,7 +77,7 @@ class AuthController extends Controller
     // get the authenticated user method
     public function user(Request $request){
 
-        return $this->success([
+        return $this->onSuccess([
             'user' => new UserResource($request->user())
         ]);
        

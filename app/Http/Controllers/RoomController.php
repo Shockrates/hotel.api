@@ -94,30 +94,25 @@ class RoomController extends Controller
     public function searchRoom(RoomSearchRequest $request)
     {
         
-        $arr = [];
+        $data = $this->roomSearchRequest($request);
 
-        //$data = $this->roomSearchRequest($request);
-        $data = array_filter($request->validated());
-
-        // return RoomResource::collection(
-        //     Room::whereDoesntHave('bookings', function ($query) use($data) {
-        //         $query->where(
-        //             [
-        //                 ['check_in_date', '<=', $data['check_out_date']],
-        //                 ['check_out_date', '>=' ,$data['check_in_date']]
-        //             ]
-        //         );
-        //     })
-        //     ->where($data['params'])
-        //     ->get()
-        // );
+        return RoomResource::collection(
+            Room::whereDoesntHave('bookings', function ($query) use($data) {
+                $query->where(
+                    [
+                        ['check_in_date', '<=', $data['check_out_date']],
+                        ['check_out_date', '>=' ,$data['check_in_date']]
+                    ]
+                );
+            })
+            ->where($data['params'])
+            ->get()
+        );
        
-    
-
-        foreach ($data as $key => $value) {
-            array_push($arr, [$key, $value]);
-        }
-        return $arr;
+        // foreach ($data as $key => $value) {
+        //     array_push($arr, [$key === $value]);
+        // }
+        // return $data;
 
 
     }
