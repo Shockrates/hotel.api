@@ -29,9 +29,9 @@ class RoomSearchRequest extends FormRequest
             'min_price' => 'integer|nullable',
             'max_price' => 'integer|nullable',
             "count_of_guest" => 'integer|nullable',
-            'parking' => 'integer|nullable',
-            'wifi' => 'integer|nullable',
-            'pet_friendly' => 'integer|nullable',
+            'parking' => 'numeric',
+            'wifi' => 'boolean',
+            'pet_friendly' => 'numeric',
             
         ];
     }
