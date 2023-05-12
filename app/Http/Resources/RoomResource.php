@@ -39,6 +39,7 @@ class RoomResource extends JsonResource
             'relationships' => [
                 'id' => (string)$this->roomType->id,
                 'title' => $this->roomType->title,
+                'reviews' => ReviewResource::collection($this->reviews)
             ]
         
         ];

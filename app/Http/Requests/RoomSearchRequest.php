@@ -35,4 +35,6 @@ class RoomSearchRequest extends FormRequest
             
         ];
     }
+
+    
 }

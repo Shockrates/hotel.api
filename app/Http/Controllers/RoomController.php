@@ -2,15 +2,22 @@
 
 namespace App\Http\Controllers;
 
+//Requests
+use App\Http\Requests\ReviewStoreRequest;
 use App\Http\Requests\RoomSearchRequest;
+//Resources
 use App\Http\Resources\BookingResource;
 use App\Http\Resources\ReviewResource;
 use App\Http\Resources\RoomResource;
+//Traits
 use App\Http\Traits\HttpRequests;
+//Models
+use App\Models\Review;
 use App\Models\Room;
-use Carbon\Carbon;
+//Libraries
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class RoomController extends Controller
 {
@@ -94,7 +101,7 @@ class RoomController extends Controller
     public function searchRoom(RoomSearchRequest $request)
     {
         
-        $data = $this->roomSearchRequest($request);
+        $data = $this->roomSearchValidation($request);
 
         return RoomResource::collection(
             Room::whereDoesntHave('bookings', function ($query) use($data) {
@@ -112,9 +119,33 @@ class RoomController extends Controller
         // foreach ($data as $key => $value) {
         //     array_push($arr, [$key === $value]);
         // }
-        // return $data;
+        //return $data;
 
 
+    }
+
+    public function storeReview(Room $room, ReviewStoreRequest $request){
+
+        $data = $request->validated();
+        
+        // $review = Review::create([
+        //     "user_id" => Auth::user()->id,
+        //     "room_id" => $room->id,
+        //     "rate" => $data["rate"],
+        //     "comment" => $data["comment"]
+
+        // ]);
+
+        $review = $room->reviews()->select(DB::raw('count(*) as review_count, avg(rate) as avg'))->get()->first();
+       // $count = $room->reviews->count();
+        
+        
+        //return new ReviewResource($review);
+        return response()->json([
+            'avg' => $review->avg,
+            'count' => $review->review_count,
+            'room' => $room->name,
+        ], 200);
     }
 
 

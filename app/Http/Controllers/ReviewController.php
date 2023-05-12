@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ReviewResource;
 use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
@@ -12,7 +14,9 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        //
+        return ReviewResource::collection(
+            Review::where('user_id', Auth::user()->id)->get()
+        );
     }
 
     /**
