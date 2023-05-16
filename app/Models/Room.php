@@ -34,7 +34,7 @@ class Room extends Model
         return $this->belongsTo(RoomType::class, 'type_id', 'id');
     }
 
-    // START Test for Booking
+
     /**
      * Get the bookings for this room.
      */
@@ -42,10 +42,7 @@ class Room extends Model
     {
         return $this->hasMany(Booking::class, 'room_id');
     }
-    //END Test for Bookings
 
-
-    // START Test for review
     /**
      * Get the reviews for this room.
      */
@@ -53,7 +50,7 @@ class Room extends Model
     {
         return $this->hasMany(Review::class, 'room_id');
     }
-    //END Test for reviews
+
 
 
 }

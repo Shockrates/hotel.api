@@ -21,7 +21,8 @@ class UserResource extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'relationships' => [
-                'reviews' => ReviewResource::collection($this->reviews)
+                'reviews' => ReviewResource::collection($this->reviews),
+                'bookings' => BookingResource::collection($this->bookings)
             ]
         ];
         

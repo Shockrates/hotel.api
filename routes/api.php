@@ -26,7 +26,7 @@ Route::get('/room/{room}/reviews',[RoomController::class, 'getAllRoomReviews']);
 Route::post('/roomsearch',[RoomController::class, 'searchRoom']);
 Route::resource('/rooms',RoomController::class);
 Route::resource('/roomtype',RoomTypeController::class);
-Route::resource('/bookings',BookingController::class);
+
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
@@ -37,5 +37,6 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/user',[AuthController::class, 'user']);
     Route::post('/room/{room}/review',[RoomController::class, 'storeReview']);
     Route::get('/review',[ReviewController::class, 'index']);
+    Route::get('/bookings',[BookingController::class, 'index']);
 });
 

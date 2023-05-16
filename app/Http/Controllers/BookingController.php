@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\BookingResource;
 use App\Models\Booking;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 {
@@ -14,7 +15,7 @@ class BookingController extends Controller
     public function index()
     {
         return BookingResource::collection(
-            Booking::all()
+            Booking::where('user_id', Auth::user()->id)->get()
         );
     }
 
