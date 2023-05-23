@@ -27,7 +27,9 @@ class Room extends Model
         'description_long',
         'parking',
         'wifi',
-        'pet_friendly'
+        'pet_friendly',
+        'avg_reviews', 
+        'count_reviews',
     ];
 
     public function roomType(){
