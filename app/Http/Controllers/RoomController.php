@@ -123,42 +123,5 @@ class RoomController extends Controller
 
 
     }
-
-    public function storeReview(Room $room, ReviewStoreRequest $request){
-
-        $data = $request->validated();
-
-        
-        
-        $review = Review::create([
-            "user_id" => Auth::user()->id,
-            "room_id" => $room->id,
-            "rate" => $data["rate"],
-            "comment" => $data["comment"]
-
-        ]);
-
-        $reviews = $room->reviews()->select(DB::raw('count(*) as review_count, avg(rate) as avg'))->get()->first();
-        // $count = $room->reviews->count();
-        $update = $room->update(['avg_reviews'=> $reviews->avg, 
-                        'count_reviews'=> $reviews->review_count
-                    ]);
-        //$update = $room->update(['wifi' => 1]);
-        
-        
-        //return new ReviewResource($review);
-        return response()->json([
-            'reviews_avg' => $reviews->avg,
-            'reviews_count' => $reviews->review_count,
-            'avg' => $room->avg_reviews,
-            'count' => $room->count_reviews,
-            'room' => $room->name,
-            'wifi' => $room->wifi,
-            'update' => $update
-        ], 200);
-    }
-
-
-
-    
+ 
 }
