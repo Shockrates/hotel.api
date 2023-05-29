@@ -53,6 +53,11 @@ class Room extends Model
         return $this->hasMany(Review::class, 'room_id');
     }
 
+    public function favoriteRooms()
+    {
+        return $this->belongstoMany(Room::class);
+    }
+
 
 
 }

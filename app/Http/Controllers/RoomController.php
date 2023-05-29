@@ -120,8 +120,13 @@ class RoomController extends Controller
         //     array_push($arr, [$key === $value]);
         // }
         //return $data;
-
-
     }
+
+    public function favorite(Room $room){
+
+        return new RoomResource($room);
+    }
+
+    
  
 }
