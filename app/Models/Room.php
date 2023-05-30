@@ -53,9 +53,9 @@ class Room extends Model
         return $this->hasMany(Review::class, 'room_id');
     }
 
-    public function favoriteRooms()
+    public function users()
     {
-        return $this->belongstoMany(Room::class);
+        return $this->belongsToMany(User::class, 'favorite', 'room_id', 'user_id');
     }
 
 

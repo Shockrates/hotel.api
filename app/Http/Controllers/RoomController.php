@@ -15,6 +15,7 @@ use App\Http\Traits\HttpRequests;
 use App\Models\Review;
 use App\Models\Room;
 //Libraries
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -124,7 +125,13 @@ class RoomController extends Controller
 
     public function favorite(Room $room){
 
-        return new RoomResource($room);
+
+        Auth::user()->favoriteRooms()->attach($room); 
+
+        $favorites =  Auth::user()->favoriteRooms()->get();
+        return response()->json([
+            'favorites' => $favorites
+        ], 200);;
     }
 
     

@@ -36,9 +36,11 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/logout',[AuthController::class, 'logout']);
     Route::get('/user',[AuthController::class, 'user']);
     Route::post('/room/{room}/review',[ReviewController::class, 'store']);
+    Route::post('/room/{room}/favorite',[RoomController::class, 'favorite']);
     Route::get('/review',[ReviewController::class, 'index']);
     Route::get('/review/{review}',[ReviewController::class, 'show']);
     Route::post('/review/{review}',[ReviewController::class, 'update']);
     Route::get('/bookings',[BookingController::class, 'index']);
+    
 });
 
