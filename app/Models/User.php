@@ -60,6 +60,6 @@ class User extends Authenticatable
 
     public function favoriteRooms()
     {
-        return $this->belongstoMany(Room::class);
+        //return $this->belongsToMany(Regions::class, 'regions_stores', 'stores_id', 'regions_id');
     }
 }
