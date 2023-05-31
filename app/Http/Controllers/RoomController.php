@@ -11,6 +11,7 @@ use App\Http\Resources\ReviewResource;
 use App\Http\Resources\RoomResource;
 //Traits
 use App\Http\Traits\HttpRequests;
+use App\Http\Traits\HttpResponses;
 //Models
 use App\Models\Review;
 use App\Models\Room;
@@ -23,7 +24,7 @@ use Illuminate\Support\Facades\DB;
 class RoomController extends Controller
 {
 
-    use HttpRequests;
+    use HttpRequests, HttpResponses;
     /**
      * Display a listing of the resource.
      */
@@ -123,15 +124,32 @@ class RoomController extends Controller
         //return $data;
     }
 
-    public function favorite(Room $room){
+    public function addTofavorite(Room $room){
 
+        $favorites =  Auth::user()->favoriteRooms()->pluck('id')->toArray();
+
+        if(in_array($room->id, $favorites)){
+            return $this->onError(403,'Room already in favorites');
+        }
 
         Auth::user()->favoriteRooms()->attach($room); 
 
-        $favorites =  Auth::user()->favoriteRooms()->get();
-        return response()->json([
-            'favorites' => $favorites
-        ], 200);;
+        $favorites =  Auth::user()->favoriteRooms()->get(['name']);
+        return $this->onSuccess($favorites, "{$room->name} added to favorites");
+    }
+
+    public function removeFromFavorite(Room $room){
+
+        $favorites =  Auth::user()->favoriteRooms()->pluck('id')->toArray();
+
+        if(!in_array($room->id, $favorites)){
+            return $this->onError(403,'This room is not in favorites');
+        }
+
+        Auth::user()->favoriteRooms()->detach($room); 
+
+        $favorites =  Auth::user()->favoriteRooms()->get(['name']);
+        return $this->onSuccess($favorites, "{$room->name} removed from favorites");
     }
 
     
