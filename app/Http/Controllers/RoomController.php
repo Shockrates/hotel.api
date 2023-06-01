@@ -25,8 +25,11 @@ class RoomController extends Controller
 {
 
     use HttpRequests, HttpResponses;
+
     /**
      * Display a listing of the resource.
+     * 
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
@@ -53,6 +56,9 @@ class RoomController extends Controller
 
     /**
      * Display the specified resource.
+     * 
+     * @return \Illuminate\Http\Resources\Json\JsonResource
+     * 
      */
     public function show(Room $room)
     {
@@ -83,7 +89,12 @@ class RoomController extends Controller
         //
     }
 
-
+    /**
+     * Display all Bookings associate with $room
+     * 
+     * @param \Illuminate\Database\Eloquent\Model $room
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
     public function getAllRoomBookings(Room $room){
 
         $bookings = $room->bookings;
@@ -92,6 +103,12 @@ class RoomController extends Controller
         
     }
 
+    /**
+     * Display all Reviews associate with $room
+     * 
+     * @param \Illuminate\Database\Eloquent\Model $room
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
     public function getAllRoomReviews(Room $room){
 
         $reviews = $room->reviews;
@@ -100,6 +117,12 @@ class RoomController extends Controller
            
     }
 
+    /**
+     * Searches Rooms 
+     * 
+     * @param \App\Http\Requests\RoomSearchRequest  $request
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
     public function searchRoom(RoomSearchRequest $request)
     {
         
@@ -117,13 +140,15 @@ class RoomController extends Controller
             ->where($data['params'])
             ->get()
         );
-       
-        // foreach ($data as $key => $value) {
-        //     array_push($arr, [$key === $value]);
-        // }
-        //return $data;
     }
 
+    /**
+     *  Adds Room to Logged User Favorites
+     * 
+     * @param \Illuminate\Database\Eloquent\Model $room
+     * @return \Illuminate\Http\JsonResponse
+     * 
+     */
     public function addTofavorite(Room $room){
 
         $favorites =  Auth::user()->favoriteRooms()->pluck('id')->toArray();
@@ -138,6 +163,13 @@ class RoomController extends Controller
         return $this->onSuccess($favorites, "{$room->name} added to favorites");
     }
 
+    /**
+     *  Removes Room from Logged User Favorites
+     * 
+     * @param \Illuminate\Database\Eloquent\Model $room
+     * @return \Illuminate\Http\JsonResponse
+     * 
+     */
     public function removeFromFavorite(Room $room){
 
         $favorites =  Auth::user()->favoriteRooms()->pluck('id')->toArray();

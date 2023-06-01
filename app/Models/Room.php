@@ -59,5 +59,19 @@ class Room extends Model
     }
 
 
+    public function isNotBooked($check_in_date, $check_out_date){
+        return empty(
+                $this->bookings()->where(
+                    [
+                        ['check_in_date', '<=', $check_out_date],
+                        ['check_out_date', '>=' ,$check_in_date]
+                    ]
+                )
+                ->get()
+                ->toArray()
+            );
+    }
+
+
 
 }
