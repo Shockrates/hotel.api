@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+//Requests
+use App\Http\Requests\BookingStoreRequest;
+//Resources
 use App\Http\Resources\BookingResource;
+//Models
 use App\Models\Booking;
+//Libraries
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,9 +35,11 @@ class BookingController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(BookingStoreRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        
     }
 
     /**
