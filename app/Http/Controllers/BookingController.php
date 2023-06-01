@@ -55,7 +55,7 @@ class BookingController extends Controller
                     "user_id" => Auth::user()->id,
                     "room_id" => $room->id,
                     "check_in_date" => $data['check_in_date'],
-                    "check_out_date" => $data['check_in_date'],
+                    "check_out_date" => $data['check_out_date'],
                     "total_price" => $data['total_days']*$room->price
                 ]);
         
