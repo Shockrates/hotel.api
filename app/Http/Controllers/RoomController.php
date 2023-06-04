@@ -141,7 +141,6 @@ class RoomController extends Controller
             ->get()
         );
     }
-
     /**
      *  Adds Room to Logged User Favorites
      * 
