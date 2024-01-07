@@ -19,7 +19,7 @@ class RoomResource extends JsonResource
             'id' => (string)$this->id,
             'attributes' =>[
                 'name' => $this->name,
-                'type_id' => $this->type_id,
+                'type' => $this->roomType->title,
                 'city' => $this->city,
                 'area' => $this->area,
                 'photo_url' => $this->photo_url,
@@ -37,9 +37,8 @@ class RoomResource extends JsonResource
                 'updated_at' => $this->updated_at,
             ],
             'relationships' => [
-                'id' => (string)$this->roomType->id,
-                'title' => $this->roomType->title,
-                'reviews' => ReviewResource::collection($this->reviews)
+                'reviews' => ReviewResource::collection($this->reviews),
+                'favorite_total' => $this->users->count()
             ]
         
         ];

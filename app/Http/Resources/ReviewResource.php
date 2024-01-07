@@ -22,9 +22,9 @@ class ReviewResource extends JsonResource
                 'rate' => $this->rate,
                 'comment' => $this->comment,
             ],
-            'relationships' => [
-                'room' => $this->room->name,
-            ]
+            // 'relationships' => [
+            //     'room' => $this->room->name,
+            // ]
         ];
     }
 }
