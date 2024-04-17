@@ -37,6 +37,7 @@ class RoomResource extends JsonResource
                 'updated_at' => $this->updated_at,
             ],
             'relationships' => [
+                'roomType' => $this->roomType,
                 'reviews' => ReviewResource::collection($this->reviews),
                 'favorite_total' => $this->users->count()
             ]
