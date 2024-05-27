@@ -29,7 +29,7 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        $cookie = cookie('token', $token, 60 * 24);
+        $cookie = cookie('token', $token, 60);
 
         return $this->onSuccess([
             'user' => new UserResource($user),
