@@ -33,10 +33,14 @@ class RoomResource extends JsonResource
                 'parking'=> $this->parking,
                 'wifi' => $this->wifi,
                 'pet_friendly' => $this->pet_friendly,
+                'avg_reviews' => $this->avg_reviews, 
+                'count_reviews'=> $this->count_reviews,
                 'created_at' => $this->created_at,
                 'updated_at' => $this->updated_at,
+
             ],
             'relationships' => [
+                'roomType'=> $this->roomType,
                 'reviews' => ReviewResource::collection($this->reviews),
                 'favorite_total' => $this->users->count()
             ]
