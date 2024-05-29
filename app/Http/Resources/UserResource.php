@@ -22,7 +22,9 @@ class UserResource extends JsonResource
             'updated_at' => $this->updated_at,
             'relationships' => [
                 'reviews' => ReviewResource::collection($this->reviews),
-                'bookings' => BookingResource::collection($this->bookings)
+                'bookings' => BookingResource::collection($this->bookings),
+                'favorites' => $this->favoriteRooms()->select('id', 'name')->get(),
+               
             ]
         ];
         
