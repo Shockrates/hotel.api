@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\DB;
 
 class UserResource extends JsonResource
 {
@@ -23,7 +24,7 @@ class UserResource extends JsonResource
             'relationships' => [
                 'reviews' => ReviewResource::collection($this->reviews),
                 'bookings' => BookingResource::collection($this->bookings),
-                'favorites' => $this->favoriteRooms()->select('id', 'name')->get(),
+                'favorites' => $this->favoriteRooms()->select(DB::raw('CAST(id AS CHAR) as room_id'), 'name')->get(),
                
             ]
         ];
