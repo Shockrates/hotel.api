@@ -21,6 +21,8 @@ class ReviewResource extends JsonResource
                 'room_id'=> (string)$this->room->name,
                 'rate' => $this->rate,
                 'comment' => $this->comment,
+                'created_at' => $this->created_at,
+                'updated_at' => $this->updated_at,
             ],
             // 'relationships' => [
             //     'room' => $this->room->name,

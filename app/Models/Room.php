@@ -13,6 +13,11 @@ class Room extends Model
     protected $table = 'room';
     protected $hidden = ['pivot'];
 
+    protected $casts = [
+        'location_lat' => 'float',
+        'location_long' => 'float'
+    ];
+
     protected $fillable = [
         'name',
         'type_id',
