@@ -158,7 +158,8 @@ class RoomController extends Controller
 
         Auth::user()->favoriteRooms()->attach($room); 
 
-        $favorites =  Auth::user()->favoriteRooms()->get(['name']);
+        //$favorites =  Auth::user()->favoriteRooms()->get(['name']);
+        $favorites =  Auth::user()->favoriteRooms()->select('room_id','name')->where('room_id', $room->id)->get();
         return $this->onSuccess($favorites, "{$room->name} added to favorites");
     }
 
