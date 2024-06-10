@@ -41,9 +41,10 @@ class RoomResource extends JsonResource
             ],
             'relationships' => [
                 'roomType' => $this->roomType,
-            
+                
                 'reviews' => ReviewResource::collection($this->reviews),
-                'favorite_total' => $this->users->count()
+                'favorite_total' => $this->users->count(),
+                //'bookings' => BookingResource::collection($this->bookings),
             ]
         
         ];

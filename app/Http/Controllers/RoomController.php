@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 //Requests
 use App\Http\Requests\ReviewStoreRequest;
 use App\Http\Requests\RoomSearchRequest;
+use App\Http\Requests\BookingStoreRequest;
 //Resources
 use App\Http\Resources\BookingResource;
 use App\Http\Resources\ReviewResource;
@@ -182,6 +183,16 @@ class RoomController extends Controller
 
         $favorites =  Auth::user()->favoriteRooms()->get(['name']);
         return $this->onSuccess($favorites, "{$room->name} removed from favorites");
+    }
+
+    public function isBooked(Room $room, BookingStoreRequest $request){
+
+        $data = $this->roomBookingValidation($request);
+
+        return response()->json([
+            'is free?' => $room->isNotBooked($data['check_in_date'],$data['check_out_date'] ),
+            'total price' => $data['total_days']*$room->price
+        ], 200);
     }
 
     
